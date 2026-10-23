@@ -16,7 +16,7 @@ services:
       - ./htdocs:/var/www/htdocs
     networks:
       app-network:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.19.0.3
   db:
     image: mariadb:latest
     container_name: db
@@ -31,7 +31,7 @@ services:
       SERVICE_NAME: db
     networks:
       app-network:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.19.0.2
 
 
 networks:
@@ -39,4 +39,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.18.0.0/16
+        - subnet: 172.19.0.0/16
