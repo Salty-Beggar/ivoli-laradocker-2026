@@ -1,0 +1,42 @@
+services:
+  app: # Aqui é o nome do serviço
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8081:80"
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/htdocs
+    volumes:
+      - ./htdocs:/var/www/htdocs
+    networks:
+      app-network:
+        ipv4_address: 172.18.0.3
+  db:
+    image: mariadb:latest
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33066:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: 123
+      SERVICE_TAGS: dev
+      SERVICE_NAME: db
+    networks:
+      app-network:
+        ipv4_address: 172.18.0.2
+
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
